@@ -12,6 +12,7 @@ public class DataReader {
 
 	String filename;
 	HashMap<String, TreeNode> allNodes;
+	int[][] adjMat = new int[43][43];
 	
 	DataReader(String fn)
 	{
@@ -71,9 +72,19 @@ public class DataReader {
 					t.setChildren(c);
 					c.setParent(t);
 				}
+				
+				if(curLine.charAt(1)== 'R')
+				{
+					
+					pcr = curLine.split(" ");
+					nodeKey = pcr[1].replaceAll("^\"|\"$", "");
+					childKey = pcr[2].replaceAll("^\"|\"$", "");
+					adjMat[Integer.parseInt(nodeKey)][Integer.parseInt(childKey)] = 1;
+					adjMat[Integer.parseInt(childKey)][Integer.parseInt(nodeKey)] = 1;
+				}
 
 			}
-			printMap();
+			
 			
 			
 		} catch (FileNotFoundException e) {
